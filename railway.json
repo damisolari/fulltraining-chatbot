@@ -1,5 +1,5 @@
 {
   "deploy": {
-    "startCommand": "npx -y serve . -p $PORT"
+    "startCommand": "npx -y serve -s . -l 3000"
   }
 }
