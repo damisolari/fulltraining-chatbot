@@ -397,15 +397,8 @@ async function send() {
       body: JSON.stringify(body)
     });
 
-    const text = await res.text();
-    let reply;
-    try {
-      const data = JSON.parse(text);
-      reply = data.reply || data.text || data.output || text;
-    } catch(e) {
-      reply = text;
-    }
-    if (!reply) reply = 'No pude procesar tu consulta. Intentá de nuevo.';
+    const data = await res.json();
+    const reply = data.reply || data.text || data.output || 'No pude procesar tu consulta. Intentá de nuevo.';
 
     typing.remove();
     addMsg(reply, 'bot');
