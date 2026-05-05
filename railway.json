@@ -1,5 +1,11 @@
 {
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksPlan": {
+      "providers": ["node"]
+    }
+  },
   "deploy": {
-    "startCommand": "npx -y serve -s . -l 3000"
+    "startCommand": "npx serve . -l 3000"
   }
 }
