@@ -34,8 +34,19 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
     max-width: 480px;
+    width: 100%;
     margin: 0 auto;
+  }
+
+  @media (max-width: 500px) {
+    .layout { max-width: 100%; }
+    .bubble { font-size: 13px; padding: 9px 12px; }
+    .header-name { font-size: 16px; }
+    .chip { font-size: 11px; padding: 5px 10px; }
+    .input-bar input { font-size: 14px; }
+    .msg-icon { width: 26px; height: 26px; font-size: 12px; }
   }
 
   /* HEADER */
@@ -386,8 +397,15 @@ async function send() {
       body: JSON.stringify(body)
     });
 
-    const data = await res.json();
-    const reply = data.reply || data.text || data.output || 'No pude procesar tu consulta. Intentá de nuevo.';
+    const text = await res.text();
+    let reply;
+    try {
+      const data = JSON.parse(text);
+      reply = data.reply || data.text || data.output || text;
+    } catch(e) {
+      reply = text;
+    }
+    if (!reply) reply = 'No pude procesar tu consulta. Intentá de nuevo.';
 
     typing.remove();
     addMsg(reply, 'bot');
